@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -22,6 +22,7 @@ import DrawerScreen from "./src/screens/DrawerScreen";
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function App() {
+  const [statusBar, setStatusBar] = useState(true);
   const translateX = useSharedValue(0);
 
   const screenStyle = useAnimatedStyle(() => {
@@ -49,19 +50,24 @@ export default function App() {
   const onPress = useCallback(() => {
     if (translateX.value > 0) {
       translateX.value = withTiming(0);
+      setStatusBar(true);
     } else {
       translateX.value = withTiming(SCREEN_WIDTH / 1.6);
+      setStatusBar(false);
     }
   }, []);
 
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.containerDrawer}>
-        <StatusBar />
+        <StatusBar
+          backgroundColor={statusBar ? "#fefefe" : "#252326"}
+          barStyle={statusBar ? "dark-content" : "light-content"}
+        />
         <DrawerScreen onPress={onPress} />
         <Animated.View style={[styles.containerScreen, screenStyle]}>
           <View style={styles.header}>
-            <Icon name="menu-outline" size={26} onPress={onPress} />
+            <Icon name="menu-outline" size={26} onPress={() => onPress()} />
             <Text style={styles.titleHeader}>Shopping</Text>
             <Icon name="cart-outline" size={26} />
           </View>
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
+    paddingHorizontal: 22,
     marginTop: 15,
     alignItems: "center",
     marginBottom: 10,

@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import Icon from "@expo/vector-icons/Ionicons";
 
@@ -32,27 +39,29 @@ export default function DrawerScreen({ onPress }: Prop) {
         />
       </View>
       <View style={styles.wrapItems}>
-        <View>
-          <Image
-            source={{ uri: "https://randomuser.me/portraits/women/10.jpg" }}
-            style={styles.avatar}
-          />
-          <Text style={styles.nameUser}>Lillie Morgan</Text>
-          <View style={styles.line} />
-          {list.map((item, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                activeOpacity={0.8}
-                onPress={() =>
-                  navigation.dispatch(CommonActions.navigate(item.route))
-                }
-              >
-                <Text style={styles.nameItem}>{item.name}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View>
+            <Image
+              source={{ uri: "https://randomuser.me/portraits/women/10.jpg" }}
+              style={styles.avatar}
+            />
+            <Text style={styles.nameUser}>Lillie Morgan</Text>
+            <View style={styles.line} />
+            {list.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.8}
+                  onPress={() =>
+                    navigation.dispatch(CommonActions.navigate(item.route))
+                  }
+                >
+                  <Text style={styles.nameItem}>{item.name}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
         <View style={{ paddingBottom: 14 }}>
           <View style={styles.line} />
           <Text style={styles.nameItem}>Logout</Text>

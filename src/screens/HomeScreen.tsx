@@ -1,14 +1,13 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
+import Banner from "../components/Banner";
+import Products from "../components/Products";
 
 export default function HomeScreen() {
   return (
-    <ScrollView>
-      <View style={{}}>
-        <Text>
-          Velit reprehenderit voluptate officia sint in mollit culpa incididunt
-        </Text>
-      </View>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Banner />
+      <Products />
     </ScrollView>
   );
 }
